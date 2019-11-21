@@ -194,6 +194,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DialogChildBot", "prototype
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationBot", "prototypes\DialogToDialog\AuthenticationBot\AuthenticationBot.csproj", "{E34A55F7-2CFC-458C-B3B8-3219D30376C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomMiddleware", "CustomMiddleware\CustomMiddleware.csproj", "{55C16867-6EFB-4D46-A539-07409D383B5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -746,6 +748,14 @@ Global
 		{E34A55F7-2CFC-458C-B3B8-3219D30376C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E34A55F7-2CFC-458C-B3B8-3219D30376C4}.Release-Windows|Any CPU.ActiveCfg = Release|Any CPU
 		{E34A55F7-2CFC-458C-B3B8-3219D30376C4}.Release-Windows|Any CPU.Build.0 = Release|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Debug-Windows|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Debug-Windows|Any CPU.Build.0 = Debug|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Release-Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{55C16867-6EFB-4D46-A539-07409D383B5B}.Release-Windows|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -827,6 +837,7 @@ Global
 		{8080B093-08B0-417D-94A0-035467E7E10E} = {00603E6B-4E31-4051-9B45-F20FF071CCD5}
 		{ADC9F309-71AA-4EB2-B63C-50B8CBAF1001} = {00603E6B-4E31-4051-9B45-F20FF071CCD5}
 		{E34A55F7-2CFC-458C-B3B8-3219D30376C4} = {00603E6B-4E31-4051-9B45-F20FF071CCD5}
+		{55C16867-6EFB-4D46-A539-07409D383B5B} = {8DDCE911-88B8-49CE-B07E-BAB87FC5C1B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7173C9F3-A7F9-496E-9078-9156E35D6E16}

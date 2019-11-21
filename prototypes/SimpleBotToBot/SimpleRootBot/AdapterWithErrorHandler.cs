@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CustomMiddleware;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SimpleRootBot.Middleware;
 
 namespace SimpleRootBot
 {
@@ -20,8 +20,7 @@ namespace SimpleRootBot
             };
             
             // Register a couple of dummy middleware instances for testing.
-            Use(new DummyMiddleware("Instance 1"));
-            Use(new DummyMiddleware("Instance 2"));
+            Use(new DummyMiddleware(">> root-middleware"));
         }
     }
 }

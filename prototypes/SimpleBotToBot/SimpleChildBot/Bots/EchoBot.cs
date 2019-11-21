@@ -25,12 +25,17 @@ namespace SimpleChildBot.Bots
                 // ChannelFailed = "channelFailed";
                 var endOfConversation = Activity.CreateEndOfConversationActivity();
                 endOfConversation.Code = EndOfConversationCodes.CompletedSuccessfully;
-                await turnContext.SendActivityAsync(endOfConversation, cancellationToken);
+                var response = await turnContext.SendActivityAsync(endOfConversation, cancellationToken);
             }
             else
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Echo : {turnContext.Activity.Text}"), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Say \"end\" or \"stop\" and I'll end the conversation and back to the parent.'"), cancellationToken);
+                var responses = await turnContext.SendActivitiesAsync(
+                    new Activity[]
+                    {
+                        MessageFactory.Text($"Echo : {turnContext.Activity.Text}"),
+                        MessageFactory.Text($"Say \"end\" or \"stop\" and I'll end the conversation and back to the parent.'")
+                    },
+                    cancellationToken);
             }
         }
     }
