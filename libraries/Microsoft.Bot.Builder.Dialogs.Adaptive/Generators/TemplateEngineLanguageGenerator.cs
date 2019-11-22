@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Rest;
 
 namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Generators
 {
@@ -39,10 +40,21 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Generators
         public TemplateEngineLanguageGenerator(string lgText, string id, Dictionary<string, IList<IResource>> resourceMapping)
         {
             this.Id = id ?? DEFAULTLABEL;
-            foreach (var mappingItem in resourceMapping)
+            var (prefix, locale) = MultiLanguageResourceLoader.ParseLGFileName(id);
+
+            if (locale != string.Empty)
             {
-                var engine = new TemplateEngine().AddText(lgText ?? string.Empty, Id, LanguageGeneratorManager.ResourceExplorerResolver(mappingItem.Key, resourceMapping));
-                multiLangEngines.Add(mappingItem.Key, engine);
+                var fallbackLocale = MultiLanguageResourceLoader.FallbackLocale(locale, resourceMapping.Keys.ToList());
+                var engine = new TemplateEngine().AddText(lgText ?? string.Empty, Id, LanguageGeneratorManager.ResourceExplorerResolver(resourceMapping[fallbackLocale]));
+                multiLangEngines.Add(fallbackLocale, engine);
+            }
+            else
+            {
+                foreach (var mappingItem in resourceMapping)
+                {
+                    var engine = new TemplateEngine().AddText(lgText ?? string.Empty, Id, LanguageGeneratorManager.ResourceExplorerResolver(mappingItem.Value));
+                    multiLangEngines.Add(mappingItem.Key, engine);
+                }
             }
         }
 
@@ -55,10 +67,22 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Generators
         {
             filePath = PathUtils.NormalizePath(filePath);
             this.Id = Path.GetFileName(filePath);
-            foreach (var mappingItem in resourceMapping)
+
+            var (prefix, locale) = MultiLanguageResourceLoader.ParseLGFileName(Id);
+
+            if (locale != string.Empty)
             {
-                var engine = new TemplateEngine().AddFile(filePath, LanguageGeneratorManager.ResourceExplorerResolver(mappingItem.Key, resourceMapping));
-                multiLangEngines.Add(mappingItem.Key, engine);
+                var fallbackLocale = MultiLanguageResourceLoader.FallbackLocale(locale, resourceMapping.Keys.ToList());
+                var engine = new TemplateEngine().AddFile(filePath, LanguageGeneratorManager.ResourceExplorerResolver(resourceMapping[fallbackLocale]));
+                multiLangEngines.Add(fallbackLocale, engine);
+            }
+            else
+            {
+                foreach (var mappingItem in resourceMapping)
+                {
+                    var engine = new TemplateEngine().AddFile(filePath, LanguageGeneratorManager.ResourceExplorerResolver(mappingItem.Value));
+                    multiLangEngines.Add(mappingItem.Key, engine);
+                }
             }
         }
 

@@ -51,13 +51,10 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Generators
         /// </value>
         public ConcurrentDictionary<string, ILanguageGenerator> LanguageGenerators { get; set; } = new ConcurrentDictionary<string, ILanguageGenerator>(StringComparer.OrdinalIgnoreCase);
 
-        public static ImportResolverDelegate ResourceExplorerResolver(string locale, Dictionary<string, IList<IResource>> resourceMapping)
+        public static ImportResolverDelegate ResourceExplorerResolver(IList<IResource> resources)
         {
             return (string source, string id) =>
             {
-                var fallbackLocale = MultiLanguageResourceLoader.FallbackLocale(locale, resourceMapping.Keys.ToList());
-                var resources = resourceMapping[fallbackLocale];
-
                 var resourceName = Path.GetFileName(PathUtils.NormalizePath(id));
 
                 var resource = resources.FirstOrDefault(u => MultiLanguageResourceLoader.ParseLGFileName(u.Id).prefix == MultiLanguageResourceLoader.ParseLGFileName(resourceName).prefix);
