@@ -23,7 +23,7 @@ namespace CustomMiddleware
         public async Task OnTurnAsync(ITurnContext turnContext, NextDelegate next, CancellationToken cancellationToken = default)
         {
             var activity = turnContext.Activity;
-            var message = $"{_label}.OnTurnAsync: {Routing(activity)} {activity.Type} {turnContext.Activity.Text}";
+            var message = $"{Utilities.Timestamp} {_label}.OnTurnAsync: {Routing(activity)} {activity.Type} {turnContext.Activity.Text}";
             Console.WriteLine(message);
 
             // Register outgoing handler.
@@ -33,19 +33,19 @@ namespace CustomMiddleware
             await next(cancellationToken);
         }
 
-        private static string Routing(Activity activity) => $"[{activity.From.Name ?? activity.From.Id}-{activity.Recipient.Name ?? activity.Recipient.Id}]";
+        private static string Routing(Activity activity) => $"[{activity.From.Name}->{activity.Recipient.Name}]";
 
         private async Task<ResourceResponse[]> OutgoingHandler(ITurnContext turnContext, List<Activity> activities, Func<Task<ResourceResponse[]>> next)
         {
             // PVA requirements:
             // how do I get the BotId and the SkillId here? 
             // How do I know if this outgoing request is coming from a skill or the host?
-            var message = $"{_label}.OnSendActivitiesAsync(leading) [# {string.Join(" # ", activities.Select(a => $"{a.Type} {a.Text}"))} #]";
+            var message = $"{Utilities.Timestamp} {_label}.OnSendActivitiesAsync(leading) [# {string.Join(" # ", activities.Select(a => $"{a.Type} {a.Text}"))} #]";
             Console.WriteLine(message);
 
             var responses = await next();
 
-            message = $"{_label}.OnSendActivitiesAsync(trailing): {Routing(activities[0])} resource IDs = ({string.Join(", ", responses.Select(r => r.Id))}).";
+            message = $"{Utilities.Timestamp} {_label}.OnSendActivitiesAsync(trailing): {Routing(activities[0])} resource IDs = ({string.Join(", ", responses.Select(r => r.Id))}).";
             Console.WriteLine(message);
 
             return responses;
